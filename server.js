@@ -25,6 +25,8 @@ app.locals.pretty = NODE_ENV !== 'production'; // Indente correctement le HTML e
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(express.urlencoded({ extended: false }));
+
 // ==========
 // App routers
 // ==========

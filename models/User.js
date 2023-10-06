@@ -19,5 +19,4 @@ const UsersSchema = mongoose.Schema(
 const collectionName = 'users'
 const UsersModel = mongoose.model('users', UsersSchema, collectionName)
 
-
 export default UsersModel
