@@ -28,15 +28,15 @@ export async function PostRegisterController(req, res) {
 
             try {
                 await UsersModel.create(newUser);
-                console.log('Utilisateur créé !');
-                res.redirect('/');
+                //add success message
+                res.redirect('/login');
             } catch (err) {
                 console.error('L\'utilisateur n\'a pas pu être créé :', err.message);
             }
 
         } else {
-            console.log("Error!")
-            res.redirect('/');
+            //add error message
+            res.redirect('/register');
         }
     }
 

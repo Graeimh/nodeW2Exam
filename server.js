@@ -11,7 +11,7 @@ import route from './routes/routes.js';
 // ==========
 
 dotenv.config();
-const { APP_HOSTNAME, APP_PORT, NODE_ENV, MONGO_STRING, MONGO_DB_NAME } = process.env;
+const { APP_HOSTNAME, APP_PORT, NODE_ENV, MONGO_STRING, MONGO_DB_NAME, SESSION_SECRET } = process.env;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
@@ -24,7 +24,12 @@ app.locals.pretty = NODE_ENV !== 'production'; // Indente correctement le HTML e
 // ==========
 
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(session({
+  name: 'INSCRYPTION_SESSION',
+  secret: SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+}));
 app.use(express.urlencoded({ extended: false }));
 
 // ==========
