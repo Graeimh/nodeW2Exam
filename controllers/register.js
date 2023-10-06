@@ -11,34 +11,34 @@ export async function PostRegisterController(req, res) {
         req.body.password.length === 0 ||
         req.body.password_confirm.length === 0) {
         
-        console.log("ERROR !")
+        req.flash('error', 'The passwords need to match !');
+        res.redirect('/register');
     } else {
         const newUser = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
         password: req.body.password,
-        }
+        };
 
-        const correspondingUser = await UsersModel.find({ email: req.body.email })
+        const correspondingUser = await UsersModel.find({ email: req.body.email });
 
         if (correspondingUser.length === 0) {
            
-            newUser.password = await argon2.hash(req.body.password)
+            newUser.password = await argon2.hash(req.body.password);
 
             try {
                 await UsersModel.create(newUser);
-                //add success message
+                req.flash('success', 'User successfully created!');
                 res.redirect('/login');
             } catch (err) {
-                console.error('L\'utilisateur n\'a pas pu être créé :', err.message);
+                req.flash('error', 'User could not be created !');
+                res.redirect('/register');
             }
 
         } else {
-            //add error message
+            req.flash('error', 'This email address is already in use!');
             res.redirect('/register');
         }
     }
-
-    
   }

@@ -12,7 +12,7 @@ block content
 
       form.ui.large.form(method="post" action="/login")
         .ui.segment
-          +field('email', 'email', 'your.email@address.tld')
-          +field('password', 'password', 'Password')
+          +field('email', 'email', 'your.email@address.tld', true)
+          +field('password', 'password', 'Password', true)
           button(type="submit").ui.fluid.large.teal.submit.button
             | Log in

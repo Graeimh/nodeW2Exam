@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 import mongoose from 'mongoose';
 import session from 'express-session';
 import route from './routes/routes.js';
+import flash from "connect-flash";
 
 // ==========
 // App initialization
@@ -30,7 +31,20 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
 }));
+app.use(flash());
+app.use((req, res, next) => {
+  res.locals.flash_success = req.flash("success");
+  next();
+});
+
+app.use((req, res, next) => {
+  res.locals.flash_error = req.flash("error");
+  next();
+});
 app.use(express.urlencoded({ extended: false }));
+
+
+
 
 // ==========
 // App routers
